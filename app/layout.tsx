@@ -3,9 +3,11 @@ import './globals.css';
 import { Analytics } from '@vercel/analytics/react';
 
 export const metadata = {
-  title: 'Next.js App Router + NextAuth + Tailwind CSS',
+  title: 'Linus Analytics Bike Store',
   description:
-    'A user admin dashboard configured with Next.js, Postgres, NextAuth, Tailwind CSS, TypeScript, and Prettier.'
+    `For this challenge, I have built a web application for a fictional bike store.
+    The application has allowed me, as the store owner, to manage bikes(Create, Read, Update, Delete) 
+    and has enabled customers to browse through the available bikes.`
 };
 
 export default function RootLayout({
