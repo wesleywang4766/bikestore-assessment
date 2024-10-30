@@ -1,4 +1,3 @@
-import { Analytics } from '@vercel/analytics/react';
 import Providers from './providers';
 import { SearchInput } from './search';
 
@@ -18,7 +17,6 @@ export default function DashboardLayout({
             {children}
           </main>
         </div>
-        <Analytics />
       </main>
     </Providers>
   );
