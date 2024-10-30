@@ -10,10 +10,13 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
+import { useModal } from '@/components/context/modal-context';
 import { SelectProduct } from '@/lib/db';
 import { deleteProduct, setProductStatusToArchived } from './actions';
 
 export function Product({ product }: { product: SelectProduct }) {
+  const { openModal } = useModal();
+
   return (
     <TableRow>
       <TableCell className="hidden sm:table-cell">
@@ -45,28 +48,22 @@ export function Product({ product }: { product: SelectProduct }) {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => openModal({ type: "edit" })}>
               <div className="flex items-center gap-2">
                 <PencilIcon className="h-3.5 w-3.5" />
                 <span>Edit</span>
               </div>
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => deleteProduct(product.id)}>
               <div className="flex items-center gap-2">
                 <CircleXIcon className="h-3.5 w-3.5" />
-                <form action={deleteProduct}>
-                  <input type="hidden" name="id" value={product.id} />
-                  <button type="submit">Delete</button>
-                </form>
+                <span>Delete</span>
               </div>
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setProductStatusToArchived(product.id)}>
               <div className="flex items-center gap-2">
                 <ArchiveXIcon className="h-3.5 w-3.5" />
-                <form action={setProductStatusToArchived}>
-                  <input type="hidden" name="id" value={product.id} />
-                  <button type="submit">Archive</button>
-                </form>
+                <span>Archive</span>
               </div>
             </DropdownMenuItem>
           </DropdownMenuContent>

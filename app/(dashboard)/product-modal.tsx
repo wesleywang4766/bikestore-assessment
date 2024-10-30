@@ -15,14 +15,18 @@ export const ProductModal = () => {
     stock: modalContent.stock || 0,
   } : {};
 
+  const modalType = modalContent?.type || 'create';
+
   return (
     <Dialog open={isOpen} onOpenChange={closeModal}>
       <DialogPortal>
         <DialogOverlay />
         <DialogContent className="outline-none">
-          <DialogTitle>Create Product</DialogTitle>
+          <DialogTitle>
+            {`${modalType.replace(/^\w/, (c: any) => c.toUpperCase())}`} Product
+          </DialogTitle>
           <DialogDescription>
-            Fill in the necessary details to create a product.
+            {`Fill in the necessary details to ${modalType} a product.`}
           </DialogDescription>
           <form> {/* onSubmit={handleCreateProduct}*/}
             <div className="flex flex-col gap-2">

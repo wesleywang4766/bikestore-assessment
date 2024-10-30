@@ -7,6 +7,7 @@ import { SelectProduct } from '@/lib/db';
 import { PlusCircle } from "lucide-react";
 import { useSearchParams, useRouter } from 'next/navigation';
 import { ProductsTable } from "./products-table";
+import React, { useMemo } from 'react';
 
 interface ProductsTabsProps {
   products: SelectProduct[];
@@ -15,6 +16,8 @@ interface ProductsTabsProps {
   totalProducts: number;
   status: string;
 }
+
+const productStatues = ["active", "inactive", "archived"];
 
 export const ProductTabs = (props: ProductsTabsProps) => {
   const { products, newOffset, pageSize, totalProducts, status } = props;
@@ -29,19 +32,30 @@ export const ProductTabs = (props: ProductsTabsProps) => {
     router.push(`?${params.toString()}`, { scroll: false });
   };
 
+  const tableProps = useMemo(() => ({
+    products,
+    offset: newOffset ?? 0,
+    pageSize,
+    totalProducts
+  }), [products, newOffset, pageSize, totalProducts]);
+
   return (
     <div>
       <Tabs defaultValue={status} onValueChange={handleTabChange}>
         <div className="flex items-center">
           <TabsList>
-            <TabsTrigger value="active">Active</TabsTrigger>
-            <TabsTrigger value="inactive">Inactive</TabsTrigger>
-            <TabsTrigger value="archived" className="hidden sm:flex">
-              Archived
-            </TabsTrigger>
+            {productStatues.map((tabStatus) => (
+              <TabsTrigger
+                key={tabStatus}
+                value={tabStatus}
+                className={tabStatus === "archived" ? "hidden sm:flex" : ""}
+              >
+                {tabStatus.charAt(0).toUpperCase() + tabStatus.slice(1)}
+              </TabsTrigger>
+            ))}
           </TabsList>
           <div className="ml-auto flex items-center gap-2">
-            <Button size="sm" className="h-8 gap-1" onClick={() => openModal()}>
+            <Button size="sm" className="h-8 gap-1" onClick={openModal}>
               <PlusCircle className="h-3.5 w-3.5" />
               <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
                 Add Product
@@ -49,30 +63,11 @@ export const ProductTabs = (props: ProductsTabsProps) => {
             </Button>
           </div>
         </div>
-        <TabsContent value="active">
-          <ProductsTable
-            products={products}
-            offset={newOffset ?? 0}
-            pageSize={pageSize}
-            totalProducts={totalProducts}
-          />
-        </TabsContent>
-        <TabsContent value="inactive">
-          <ProductsTable
-            products={products}
-            offset={newOffset ?? 0}
-            pageSize={pageSize}
-            totalProducts={totalProducts}
-          />
-        </TabsContent>
-        <TabsContent value="archived">
-          <ProductsTable
-            products={products}
-            offset={newOffset ?? 0}
-            pageSize={pageSize}
-            totalProducts={totalProducts}
-          />
-        </TabsContent>
+        {productStatues.map((tabStatus) => (
+          <TabsContent key={tabStatus} value={tabStatus}>
+            <ProductsTable {...tableProps} />
+          </TabsContent>
+        ))}
       </Tabs>
     </div>
   );

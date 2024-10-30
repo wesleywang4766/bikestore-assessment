@@ -38,7 +38,7 @@ export function ProductsTable({
 
   function prevPage() {
     const params = new URLSearchParams(searchParams.toString());
-    params.set('offset', Math.max(offset - pageSize * 2, 0).toString());
+    params.set('offset', (Math.floor((offset - 1) / pageSize - 1) * pageSize).toString());
     router.push(`?${params.toString()}`, { scroll: false });
   }
 

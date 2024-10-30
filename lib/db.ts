@@ -11,7 +11,7 @@ import {
   pgEnum,
   serial
 } from 'drizzle-orm/pg-core';
-import { count, eq, ilike, sql } from 'drizzle-orm';
+import { count, eq, ilike } from 'drizzle-orm';
 import { createInsertSchema } from 'drizzle-zod';
 import { and } from 'drizzle-orm';
 
@@ -66,11 +66,13 @@ export async function getProducts(
   const totalCount: number = totalProducts[0].count;
   const newOffset = Math.min(offset + pageSize, totalCount);
 
-  return {
+  const result = {
     products: moreProducts,
     newOffset,
     totalProducts: totalCount
   };
+
+  return result;
 }
 
 export async function deleteProductById(id: number) {

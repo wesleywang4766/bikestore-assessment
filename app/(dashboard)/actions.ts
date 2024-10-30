@@ -3,14 +3,12 @@
 import { deleteProductById, setProductStatusToArchivedById } from '@/lib/db';
 import { revalidatePath } from 'next/cache';
 
-export async function deleteProduct(formData: FormData) {
-  let id = Number(formData.get('id'));
+export async function deleteProduct(id: number) {
   await deleteProductById(id);
   revalidatePath('/');
 }
 
-export async function setProductStatusToArchived(formData: FormData) {
-  let id = Number(formData.get('id'));
+export async function setProductStatusToArchived(id: number) {
   await setProductStatusToArchivedById(id);
   revalidatePath('/');
 }
