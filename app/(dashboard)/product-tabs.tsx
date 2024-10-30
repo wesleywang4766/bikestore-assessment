@@ -2,12 +2,11 @@
 
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useModal } from '@/components/context/modal-context';
 import { SelectProduct } from '@/lib/db';
 import { PlusCircle } from "lucide-react";
 import { useSearchParams, useRouter } from 'next/navigation';
 import { ProductsTable } from "./products-table";
-import { ProductModal } from "./product-modal";
-
 
 interface ProductsTabsProps {
   products: SelectProduct[];
@@ -21,6 +20,7 @@ export const ProductTabs = (props: ProductsTabsProps) => {
   const { products, newOffset, pageSize, totalProducts, status } = props;
   const searchParams = useSearchParams();
   const router = useRouter();
+  const { openModal } = useModal();
 
   const handleTabChange = (value: string) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -41,14 +41,12 @@ export const ProductTabs = (props: ProductsTabsProps) => {
             </TabsTrigger>
           </TabsList>
           <div className="ml-auto flex items-center gap-2">
-            <ProductModal triggerButton={
-              <Button size="sm" className="h-8 gap-1">
-                <PlusCircle className="h-3.5 w-3.5" />
-                <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                  Add Product
-                </span>
-              </Button>
-            } />
+            <Button size="sm" className="h-8 gap-1" onClick={() => openModal()}>
+              <PlusCircle className="h-3.5 w-3.5" />
+              <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                Add Product
+              </span>
+            </Button>
           </div>
         </div>
         <TabsContent value="active">

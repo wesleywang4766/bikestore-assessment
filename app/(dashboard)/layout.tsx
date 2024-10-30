@@ -1,5 +1,6 @@
 import Providers from './providers';
 import { SearchInput } from './search';
+import { ProductModal } from './product-modal';
 
 export default function DashboardLayout({
   children
@@ -18,6 +19,7 @@ export default function DashboardLayout({
           </main>
         </div>
       </main>
+      <ProductModal />
     </Providers>
   );
 }
