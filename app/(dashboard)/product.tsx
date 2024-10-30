@@ -55,6 +55,7 @@ export function Product({ product }: { product: SelectProduct }) {
               <div className="flex items-center gap-2">
                 <CircleXIcon className="h-3.5 w-3.5" />
                 <form action={deleteProduct}>
+                  <input type="hidden" name="id" value={product.id} />
                   <button type="submit">Delete</button>
                 </form>
               </div>
@@ -63,6 +64,7 @@ export function Product({ product }: { product: SelectProduct }) {
               <div className="flex items-center gap-2">
                 <ArchiveXIcon className="h-3.5 w-3.5" />
                 <form action={setProductStatusToArchived}>
+                  <input type="hidden" name="id" value={product.id} />
                   <button type="submit">Archive</button>
                 </form>
               </div>

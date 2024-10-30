@@ -17,28 +17,35 @@ import {
 } from '@/components/ui/card';
 import { Product } from './product';
 import { SelectProduct } from '@/lib/db';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export function ProductsTable({
   products,
   offset,
+  pageSize,
   totalProducts
 }: {
   products: SelectProduct[];
   offset: number;
+  pageSize: number;
   totalProducts: number;
 }) {
   let router = useRouter();
+  const searchParams = useSearchParams();
   let productsPerPage = 5;
 
   function prevPage() {
-    router.back();
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('offset', Math.max(offset - pageSize * 2, 0).toString());
+    router.push(`?${params.toString()}`, { scroll: false });
   }
 
   function nextPage() {
-    router.push(`/?offset=${offset}`, { scroll: false });
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('offset', offset.toString());
+    router.push(`?${params.toString()}`, { scroll: false });
   }
 
   return (
@@ -80,7 +87,7 @@ export function ProductsTable({
           <div className="text-xs text-muted-foreground">
             Showing{' '}
             <strong>
-              {Math.max(0, Math.min(offset - productsPerPage, totalProducts) + 1)}-{offset}
+              {offset - ((offset - 1) % productsPerPage)}-{offset}
             </strong>{' '}
             of <strong>{totalProducts}</strong> products
           </div>
@@ -90,7 +97,7 @@ export function ProductsTable({
               variant="ghost"
               size="sm"
               type="submit"
-              disabled={offset === productsPerPage}
+              disabled={offset <= productsPerPage}
             >
               <ChevronLeft className="mr-2 h-4 w-4" />
               Prev
@@ -100,7 +107,7 @@ export function ProductsTable({
               variant="ghost"
               size="sm"
               type="submit"
-              disabled={offset + productsPerPage > totalProducts}
+              disabled={offset === totalProducts}
             >
               Next
               <ChevronRight className="ml-2 h-4 w-4" />
