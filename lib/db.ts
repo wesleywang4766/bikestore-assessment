@@ -70,3 +70,7 @@ export async function getProducts(
 export async function deleteProductById(id: number) {
   await db.delete(products).where(eq(products.id, id));
 }
+
+export async function setProductStatusToArchivedById(id: number) {
+  await db.update(products).set({ status: 'archived' }).where(eq(products.id, id));
+}
