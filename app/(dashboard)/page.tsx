@@ -11,6 +11,7 @@ export default async function ProductsPage(
   const offset = searchParams.offset ?? 0;
   const status = searchParams.status ?? 'active';
   const pageSize = searchParams.pageSize ?? 5;
+
   const { products, newOffset, totalProducts } = await getProducts(
     search,
     Number(offset),
