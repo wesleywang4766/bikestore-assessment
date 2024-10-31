@@ -30,12 +30,26 @@ export const useImageUploader = (productId: number) => {
     const image = new Image();
     image.src = selectedImage;
     image.onload = () => {
-      const squareSize = 128;
-      const x = (canvas.width - squareSize) / 2;
-      const y = (canvas.height - squareSize) / 2;
+      const canvasAspectRatio = canvas.width / canvas.height;
+      const imageAspectRatio = image.width / image.height;
+
+      let drawWidth = canvas.width;
+      let drawHeight = canvas.height;
+      let drawX = 0;
+      let drawY = 0;
+
+      if (canvasAspectRatio > imageAspectRatio) {
+        drawHeight = canvas.height;
+        drawWidth = drawHeight * imageAspectRatio;
+        drawX = (canvas.width - drawWidth) / 2;
+      } else {
+        drawWidth = canvas.width;
+        drawHeight = drawWidth / imageAspectRatio;
+        drawY = (canvas.height - drawHeight) / 2;
+      }
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(image, x, y, squareSize, squareSize, 0, 0, canvas.width, canvas.height);
+      ctx.drawImage(image, drawX, drawY, drawWidth, drawHeight);
       setCanvasData(canvas.toDataURL('image/png'));
     };
   }, [selectedImage]);

@@ -37,27 +37,27 @@ export function ProductsTable({
           Manage your products and view their sales performance.
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        {
-          isPending ? (
-            <Loader />
-          ) : (
+      {isPending ? (
+        <Loader />
+      ) : (
+        <>
+          <CardContent>
             <Table>
               <ProductTableHeader />
               <ProductTableBody products={products} />
             </Table>
-          )
-        }
-      </CardContent>
-      <CardFooter>
-        <Pagination
-          offset={offset}
-          pageSize={pageSize}
-          totalProducts={totalProducts}
-          router={router}
-          searchParams={searchParams}
-        />
-      </CardFooter>
+          </CardContent>
+          <CardFooter>
+            <Pagination
+              offset={offset}
+              pageSize={pageSize}
+              totalProducts={totalProducts}
+              router={router}
+              searchParams={searchParams}
+            />
+          </CardFooter>
+        </>
+      )}
     </Card>
   );
 }
