@@ -1,5 +1,5 @@
 import { getProducts } from '@/lib/db';
-import { ProductTabs } from './component/product-tabs';
+import { ProductTabs } from '@/containers/dashboard/product-tabs';
 
 export default async function ProductsPage(
   props: {

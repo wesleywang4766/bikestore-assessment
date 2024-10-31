@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ChevronsLeft, ChevronsRight, ChevronLeft, ChevronRight } from "lucide-react";
-import { useTransitionContext } from "@/components/context/transition-context";
+import { useTransitionContext } from "@/providers/context/transition-context";
 
 export function Pagination({
   offset,

@@ -1,17 +1,17 @@
 'use client'
 
 import React from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { PlusCircle } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Tabs } from "@/components/ui/tabs";
-import { useModal } from '@/components/context/modal-context';
+import { useModal } from '@/providers/context/modal-context';
 import { SelectProduct } from '@/lib/db';
 import { TabHeader } from "./TabHeader";
 import { TabContent } from "./TabContent";
-import { useRouterContext } from '@/components/context/router-context';
-import { useTransitionContext } from '@/components/context/transition-context';
+import { useRouterContext } from '@/providers/context/router-context';
+import { useTransitionContext } from '@/providers/context/transition-context';
 
 interface ProductsTabsProps {
   products: SelectProduct[];

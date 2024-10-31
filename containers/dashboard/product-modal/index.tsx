@@ -4,7 +4,7 @@ import { PencilIcon, PencilOffIcon } from "lucide-react";
 import { Dialog, DialogClose, DialogOverlay, DialogContent, DialogDescription, DialogPortal, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { FormField } from './FormField';
-import { useProductForm } from '../../hook/useProductForm';
+import { useProductForm } from '../../../hooks/useProductForm';
 
 export const ProductModal = () => {
   const {

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { uploadProductImage } from '../actions';
+import { uploadProductImage } from '../app/(dashboard)/actions';
 
 export const useImageUploader = (productId: number) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);

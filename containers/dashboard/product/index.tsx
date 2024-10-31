@@ -10,9 +10,9 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
-import { useModal } from '@/components/context/modal-context';
+import { useModal } from '@/providers/context/modal-context';
 import { SelectProduct } from '@/lib/db';
-import { deleteProduct, setProductStatusToArchived } from '../../actions';
+import { deleteProduct, setProductStatusToArchived } from '../../../app/(dashboard)/actions';
 import { ImageUploader } from '../product-image-upload';
 
 export function Product({ product }: { product: SelectProduct }) {

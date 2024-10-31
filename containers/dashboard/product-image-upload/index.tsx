@@ -1,7 +1,7 @@
 import React from 'react';
 import { UploadIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useImageUploader } from '../../hook/useImageUploader';
+import { useImageUploader } from '@/hooks/useImageUploader';
 import { FileInput } from './FileInput';
 import { ImageCanvas } from './ImageCanvas';
 

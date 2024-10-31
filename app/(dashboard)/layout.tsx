@@ -1,5 +1,5 @@
-import Providers from './providers';
-import { ProductModal } from './component/product-modal';
+import Providers from '@/providers/index';
+import { ProductModal } from '@/containers/dashboard/product-modal';
 
 export default function DashboardLayout({
   children

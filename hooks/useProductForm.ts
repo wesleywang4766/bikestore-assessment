@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { newProduct, editProduct } from '../actions';
-import { useModal } from '@/components/context/modal-context';
+import { newProduct, editProduct } from '../app/(dashboard)/actions';
+import { useModal } from '@/providers/context/modal-context';
 
 export const useProductForm = () => {
   const { isOpen, modalContent, closeModal } = useModal();

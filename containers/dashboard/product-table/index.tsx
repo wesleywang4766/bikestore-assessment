@@ -10,8 +10,8 @@ import { ProductTableHeader } from "./ProductTableHeader";
 import { ProductTableBody } from "./ProductTableBody";
 
 import { SelectProduct } from "@/lib/db";
-import { useRouterContext } from "@/components/context/router-context";
-import { useTransitionContext } from '@/components/context/transition-context';
+import { useRouterContext } from "@/providers/context/router-context";
+import { useTransitionContext } from '@/providers/context/transition-context';
 import Loader from 'app/(dashboard)/loading';
 
 export function ProductsTable({
