@@ -1,5 +1,7 @@
+import { TransitionStartFunction } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useTransitionContext } from "@/components/context/transition-context";
 
 export function Pagination({
   offset,
@@ -15,17 +17,22 @@ export function Pagination({
   searchParams: URLSearchParams;
 }) {
   let productsPerPage = 5;
+  const { startTransition } = useTransitionContext();
 
   function prevPage() {
     const params = new URLSearchParams(searchParams.toString());
     params.set('offset', (Math.floor((offset - 1) / pageSize - 1) * pageSize).toString());
-    router?.push(`?${params.toString()}`, { scroll: false });
+    startTransition(() => {
+      router?.push(`?${params.toString()}`, { scroll: false });
+    });
   }
 
   function nextPage() {
     const params = new URLSearchParams(searchParams.toString());
     params.set('offset', offset.toString());
-    router?.push(`?${params.toString()}`, { scroll: false });
+    startTransition(() => {
+      router?.push(`?${params.toString()}`, { scroll: false });
+    });
   }
 
   return (

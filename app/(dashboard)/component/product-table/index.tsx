@@ -1,5 +1,6 @@
 'use client';
 
+import { useTransition } from 'react';
 import { useSearchParams } from "next/navigation";
 
 import { Table } from "@/components/ui/table";
@@ -10,6 +11,8 @@ import { ProductTableBody } from "./ProductTableBody";
 
 import { SelectProduct } from "@/lib/db";
 import { useRouterContext } from "@/components/context/router-context";
+import { useTransitionContext } from '@/components/context/transition-context';
+import Loader from 'app/(dashboard)/loading';
 
 export function ProductsTable({
   products,
@@ -24,6 +27,7 @@ export function ProductsTable({
 }) {
   const searchParams = useSearchParams();
   const router = useRouterContext();
+  const { isPending } = useTransitionContext();
 
   return (
     <Card>
@@ -34,10 +38,16 @@ export function ProductsTable({
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Table>
-          <ProductTableHeader />
-          <ProductTableBody products={products} />
-        </Table>
+        {
+          isPending ? (
+            <Loader />
+          ) : (
+            <Table>
+              <ProductTableHeader />
+              <ProductTableBody products={products} />
+            </Table>
+          )
+        }
       </CardContent>
       <CardFooter>
         <Pagination

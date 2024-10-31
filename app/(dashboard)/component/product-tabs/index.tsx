@@ -11,6 +11,7 @@ import { SelectProduct } from '@/lib/db';
 import { TabHeader } from "./TabHeader";
 import { TabContent } from "./TabContent";
 import { useRouterContext } from '@/components/context/router-context';
+import { useTransitionContext } from '@/components/context/transition-context';
 
 interface ProductsTabsProps {
   products: SelectProduct[];
@@ -26,13 +27,16 @@ export const ProductTabs = (props: ProductsTabsProps) => {
   const { products, newOffset = 0, pageSize, totalProducts, status } = props;
   const searchParams = useSearchParams();
   const router = useRouterContext();
+  const { startTransition } = useTransitionContext();
   const { openModal } = useModal();
 
   const handleStatusChange = (value: string) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set('status', value);
     params.set('offset', '0');
-    router?.push(`?${params.toString()}`, { scroll: false });
+    startTransition(() => {
+      router?.push(`?${params.toString()}`, { scroll: false });
+    });
   };
 
   return (
