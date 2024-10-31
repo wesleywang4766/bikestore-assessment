@@ -1,7 +1,7 @@
 'use client';
 
 import { useTransition } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Input } from '@/components/ui/input';
 import { Spinner } from '@/components/icons';
 import { Search } from 'lucide-react';
@@ -11,10 +11,11 @@ export function SearchInput() {
   const [isPending, startTransition] = useTransition();
 
   function searchAction(formData: FormData) {
-    let value = formData.get('q') as string;
-    let params = new URLSearchParams({ q: value });
+    const searchParams = useSearchParams();
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('q', formData.get('q') as string);
     startTransition(() => {
-      router.replace(`/?${params.toString()}`);
+      router?.push(`?${params.toString()}`, { scroll: false });
     });
   }
 
