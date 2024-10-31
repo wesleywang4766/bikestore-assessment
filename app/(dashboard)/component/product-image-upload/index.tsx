@@ -1,9 +1,9 @@
 import React from 'react';
-import { Button } from '@/components/ui/button';
 import { UploadIcon } from 'lucide-react';
-import { useImageUploader } from './hook';
-import { FileInput } from './component/product-image-upload/file-input';
-import { ImageCanvas } from './component/product-image-upload/image-canvas';
+import { Button } from '@/components/ui/button';
+import { useImageUploader } from '../../hook/useImageUploader';
+import { FileInput } from './FileInput';
+import { ImageCanvas } from './ImageCanvas';
 
 interface ImageUploaderProps {
   productId: number;

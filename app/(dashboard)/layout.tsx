@@ -1,6 +1,6 @@
 import Providers from './providers';
-import { SearchInput } from './search';
-import { ProductModal } from './product-modal';
+import { SearchInput } from './component/search';
+import { ProductModal } from './component/product-modal';
 
 export default function DashboardLayout({
   children

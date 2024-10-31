@@ -12,8 +12,8 @@ import { MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { useModal } from '@/components/context/modal-context';
 import { SelectProduct } from '@/lib/db';
-import { deleteProduct, setProductStatusToArchived } from './actions';
-import { ImageUploader } from './product-image-upload';
+import { deleteProduct, setProductStatusToArchived } from '../../actions';
+import { ImageUploader } from '../product-image-upload';
 
 export function Product({ product }: { product: SelectProduct }) {
   const { openModal } = useModal();
