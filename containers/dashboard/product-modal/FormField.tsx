@@ -6,22 +6,42 @@ interface FormFieldProps {
   name: string;
   type: string;
   value: string | number;
+  max?: number;
+  correctValue?: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const FormField: React.FC<FormFieldProps> = ({ label, name, type, value, onChange }) => (
+export const FormField: React.FC<FormFieldProps> = ({ label, name, type, value, max, correctValue, onChange }) => (
   <fieldset>
-    <div className="flex items-center">
-      <label className="text-sm w-[100px]" htmlFor={name}>
-        {label}
-      </label>
-      <Input
-        name={name}
-        type={type}
-        value={value}
-        onChange={onChange}
-        className="rounded-lg bg-background"
-      />
-    </div>
+    {type === 'radio' ? (
+      <div className="flex">
+        <label className="text-sm" htmlFor={name}>
+          {label}
+        </label>
+        <input
+          className="mx-2"
+          name={name}
+          type="radio"
+          value={value}
+          max={max}
+          onChange={onChange}
+          checked={value === correctValue}
+        />
+      </div>
+    ) : (
+      <div className="flex items-center">
+        <label className="text-sm font-bold w-[120px]" htmlFor={name}>
+          {label}:&nbsp;
+        </label>
+        <Input
+          name={name}
+          type={type}
+          value={value}
+          max={max}
+          onChange={onChange}
+          className="rounded-lg bg-background"
+        />
+      </div>
+    )}
   </fieldset>
 );

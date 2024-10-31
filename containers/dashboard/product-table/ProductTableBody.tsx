@@ -1,6 +1,6 @@
 import { TableBody } from "@/components/ui/table";
 import { SelectProduct } from "@/lib/db";
-import { Product } from "../product";
+import { Product } from "./Product";
 
 export function ProductTableBody({ products }: { products: SelectProduct[] }) {
   return (

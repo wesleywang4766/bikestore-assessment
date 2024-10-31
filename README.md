@@ -92,15 +92,19 @@ This command sets `main` as the default branch and uploads all files to your new
   - In the Vercel Postgres database dashboard, create the `products` table and `status` type using the following SQL commands:
 
     ```sql
-    CREATE TYPE status AS ENUM ('active', 'inactive', 'archived');
+    CREATE TYPE status AS ENUM ('active', 'draft', 'archived');
+    CREATE TYPE type AS ENUM ('road bike', 'mountain bike', 'racing bike');
 
     CREATE TABLE products (
       id SERIAL PRIMARY KEY,
-      image_url TEXT NOT NULL,
       name TEXT NOT NULL,
-      status status NOT NULL,
+      description TEXT NOT NULL,
+      rating NUMERIC(10, 2) NOT NULL,
       price NUMERIC(10, 2) NOT NULL,
-      stock INTEGER NOT NULL,
+      quantity INTEGER NOT NULL,
+      type type NOT NULL,
+      status status NOT NULL,
+      image_url TEXT NOT NULL,
       available_at TIMESTAMP NOT NULL
     );
     ```

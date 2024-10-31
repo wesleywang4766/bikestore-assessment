@@ -10,8 +10,11 @@ export const ProductModal = () => {
   const {
     isOpen,
     name,
+    description,
+    type,
+    rating,
     price,
-    stock,
+    quantity,
     isDraft,
     modalType,
     handleInputChange,
@@ -35,8 +38,18 @@ export const ProductModal = () => {
           <form>
             <div className="flex flex-col gap-4">
               <FormField label="Name" name="name" type="text" value={name} onChange={handleInputChange} />
+              <FormField label="Description" name="description" type="text" value={description} onChange={handleInputChange} />
+              <FormField label="Rating" name="rating" type="number" max={5} value={rating} onChange={handleInputChange} />
               <FormField label="Price" name="price" type="number" value={price} onChange={handleInputChange} />
-              <FormField label="Stock" name="stock" type="number" value={stock} onChange={handleInputChange} />
+              <FormField label="Quantity" name="quantity" type="number" value={quantity} onChange={handleInputChange} />
+              <div className="flex gap-4 items-center">
+                <label className="text-sm font-bold">
+                  Type:&nbsp;
+                </label>
+                <FormField label="Road Bike" name="type" type="radio" value="road bike" correctValue={type} onChange={handleInputChange} />
+                <FormField label="Mountain Bike" name="type" type="radio" value="mountain bike" correctValue={type} onChange={handleInputChange} />
+                <FormField label="Racing Bike" name="type" type="radio" value="racing bike" correctValue={type} onChange={handleInputChange} />
+              </div>
               <div className="flex gap-4 items-center">
                 <Button
                   type="submit"

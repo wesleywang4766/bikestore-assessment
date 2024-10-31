@@ -32,14 +32,25 @@ export function Product({ product }: { product: SelectProduct }) {
           <ImageUploader productId={product.id} />
         )}
       </TableCell>
-      <TableCell className="font-medium">{product.name}</TableCell>
       <TableCell>
+        <div className="font-medium">
+          {product.name}
+        </div>
+        {product.description}
+      </TableCell>
+      <TableCell>
+        <Badge variant="outline" className="capitalize text-center break-words">
+          {product.type}
+        </Badge>
+      </TableCell>
+      <TableCell className="hidden md:table-cell">
         <Badge variant="outline" className="capitalize">
           {product.status}
         </Badge>
       </TableCell>
+      <TableCell className="hidden md:table-cell">{product.rating}/5.00</TableCell>
       <TableCell className="hidden md:table-cell">{`$${product.price}`}</TableCell>
-      <TableCell className="hidden md:table-cell">{product.stock}</TableCell>
+      <TableCell className="hidden md:table-cell">{product.quantity}</TableCell>
       <TableCell className="hidden md:table-cell">
         {product.availableAt.toLocaleDateString("en-US")}
       </TableCell>
@@ -52,19 +63,19 @@ export function Product({ product }: { product: SelectProduct }) {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => openModal({ type: "edit", ...product })}>
+            <DropdownMenuItem onClick={() => openModal({ modalType: "edit", ...product })}>
               <div className="flex items-center gap-2">
                 <PencilIcon className="h-3.5 w-3.5" />
                 <span>Edit</span>
               </div>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => deleteProduct(product.id)}>
+            <DropdownMenuItem onClick={() => deleteProduct(product.id).then(() => alert("deleted!"))}>
               <div className="flex items-center gap-2">
                 <CircleXIcon className="h-3.5 w-3.5" />
                 <span>Delete</span>
               </div>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setProductStatusToArchived(product.id)}>
+            <DropdownMenuItem onClick={() => setProductStatusToArchived(product.id).then(() => alert("archived!"))}>
               <div className="flex items-center gap-2">
                 <ArchiveXIcon className="h-3.5 w-3.5" />
                 <span>Archive</span>

@@ -18,21 +18,25 @@ import { and } from 'drizzle-orm';
 
 export const db = drizzle(neon(process.env.POSTGRES_URL!));
 
-export const statusEnum = pgEnum('status', ['active', 'inactive', 'archived']);
+export const statusEnum = pgEnum('status', ['active', 'draft', 'archived']);
+export const typeEnum = pgEnum('type', ['road bike', 'mountain bike', 'racing bike']);
 
 export const products = pgTable('products', {
   id: serial('id').primaryKey(),
-  imageUrl: text('image_url').notNull(),
   name: text('name').notNull(),
-  status: statusEnum('status').notNull(),
+  description: text('description').notNull(),
+  rating: numeric('rating', { precision: 10, scale: 2 }).notNull(),
   price: numeric('price', { precision: 10, scale: 2 }).notNull(),
-  stock: integer('stock').notNull(),
+  quantity: integer('quantity').notNull(),
+  type: typeEnum('type').notNull(),
+  status: statusEnum('status').notNull(),
+  imageUrl: text('image_url').notNull(),
   availableAt: timestamp('available_at').notNull()
 });
 
 export type SelectProduct = typeof products.$inferSelect;
 export type CreateProduct = typeof products.$inferInsert;
-export const insertProductSchema = createInsertSchema(products);
+export const insertproductschema = createInsertSchema(products);
 
 export async function getProducts(
   search: string,
@@ -49,11 +53,11 @@ export async function getProducts(
   }
 
   const whereClause = and(
-    eq(products.status, status as 'active' | 'inactive' | 'archived'),
+    eq(products.status, status as 'active' | 'draft' | 'archived'),
     ilike(products.name, `%${search}%`)
   );
 
-  let totalProducts = await db
+  let totalproducts = await db
     .select({ count: count() })
     .from(products)
     .where(whereClause);
@@ -65,7 +69,7 @@ export async function getProducts(
     .limit(5)
     .offset(offset);
 
-  const totalCount: number = totalProducts[0].count;
+  const totalCount: number = totalproducts[0].count;
   const newOffset = Math.min(offset + pageSize, totalCount);
 
   const result = {

@@ -21,7 +21,7 @@ interface ProductsTabsProps {
   status: string;
 }
 
-const productStatuses = ["active", "inactive", "archived"];
+const productStatuses = ["active", "draft", "archived"];
 
 export const ProductTabs = (props: ProductsTabsProps) => {
   const { products, newOffset = 0, pageSize, totalProducts, status } = props;
