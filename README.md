@@ -1,4 +1,4 @@
-<div align="center"><strong>Linux Analytics Bike Store</strong></div>
+<div align="center"><strong>Linus Analytics Bike Store</strong></div>
 <div align="center">Built with the Next.js App Router</div>
 <br />
 <div align="center">
