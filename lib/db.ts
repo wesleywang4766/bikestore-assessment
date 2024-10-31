@@ -1,5 +1,6 @@
 import 'server-only';
 
+import { put } from '@vercel/blob';
 import { neon } from '@neondatabase/serverless';
 import { drizzle } from 'drizzle-orm/neon-http';
 import {
@@ -11,7 +12,7 @@ import {
   pgEnum,
   serial
 } from 'drizzle-orm/pg-core';
-import { count, eq, ilike } from 'drizzle-orm';
+import { count, eq, ilike, desc } from 'drizzle-orm';
 import { createInsertSchema } from 'drizzle-zod';
 import { and } from 'drizzle-orm';
 
@@ -30,6 +31,7 @@ export const products = pgTable('products', {
 });
 
 export type SelectProduct = typeof products.$inferSelect;
+export type CreateProduct = typeof products.$inferInsert;
 export const insertProductSchema = createInsertSchema(products);
 
 export async function getProducts(
@@ -75,10 +77,33 @@ export async function getProducts(
   return result;
 }
 
+export async function createProduct(product: CreateProduct) {
+  const maxProduct = await db
+    .select()
+    .from(products)
+    .orderBy(desc(products.id))
+    .limit(1);
+
+  product.id = maxProduct[0].id + 1;
+
+  await db.insert(products).values(product);
+}
+
+export async function editProductById(id: number, product: Partial<CreateProduct>) {
+  await db.update(products).set(product).where(eq(products.id, id));
+}
+
 export async function deleteProductById(id: number) {
   await db.delete(products).where(eq(products.id, id));
 }
 
 export async function setProductStatusToArchivedById(id: number) {
   await db.update(products).set({ status: 'archived' }).where(eq(products.id, id));
+}
+
+export async function uploadProductImageById(id: number, imageData: string) {
+  const { url: imageUrl } = await put(`products/${id}.png`, Buffer.from(imageData, 'base64'), {
+    access: 'public',
+  });
+  await db.update(products).set({ imageUrl }).where(eq(products.id, id));
 }

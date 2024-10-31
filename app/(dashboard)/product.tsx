@@ -13,6 +13,7 @@ import { TableCell, TableRow } from '@/components/ui/table';
 import { useModal } from '@/components/context/modal-context';
 import { SelectProduct } from '@/lib/db';
 import { deleteProduct, setProductStatusToArchived } from './actions';
+import { ImageUploader } from './product-image-upload';
 
 export function Product({ product }: { product: SelectProduct }) {
   const { openModal } = useModal();
@@ -20,13 +21,16 @@ export function Product({ product }: { product: SelectProduct }) {
   return (
     <TableRow>
       <TableCell className="hidden sm:table-cell">
-        <Image
-          alt="Product image"
-          className="aspect-square rounded-md object-cover"
-          height="64"
-          src={product.imageUrl}
-          width="64"
-        />
+        {product.imageUrl ? (
+          <Image
+            alt="Product image"
+            className="aspect-square rounded-md object-cover"
+            height="128"
+            src={product.imageUrl}
+            width="128"
+          />) : (
+          <ImageUploader productId={product.id} />
+        )}
       </TableCell>
       <TableCell className="font-medium">{product.name}</TableCell>
       <TableCell>
@@ -48,7 +52,7 @@ export function Product({ product }: { product: SelectProduct }) {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => openModal({ type: "edit" })}>
+            <DropdownMenuItem onClick={() => openModal({ type: "edit", ...product })}>
               <div className="flex items-center gap-2">
                 <PencilIcon className="h-3.5 w-3.5" />
                 <span>Edit</span>
